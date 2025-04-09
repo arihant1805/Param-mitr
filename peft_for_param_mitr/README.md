@@ -1,5 +1,5 @@
 ---
-base_model: google/flan-t5-small
+base_model: /kaggle/working/Model
 library_name: peft
 ---
 
