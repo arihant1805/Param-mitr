@@ -64,9 +64,6 @@ pip install torch transformers datasets peft evaluate tqdm
   tokenizer = AutoTokenizer.from_pretrained(model_name)
   ```
 
-- **Tokenization:**  
-  Prepare inputs by concatenating the `instruction`, user query, and a task prompt (e.g., `"Answer :"`).
-
 - **Loading the PEFT Adapter:**
   ```python
   from peft import PeftModel
