@@ -55,8 +55,8 @@ pip install torch transformers datasets peft evaluate tqdm
 - **Loading the Dataset:**  
   Load your pre-saved mental health dialogue dataset from disk:
   ```python
-  from datasets import load_from_disk
-  dataset = load_from_disk('./dataset')
+  from datasets import load_dataset
+  dataset = load_dataset('samhog/psychology-10k', split = ['train'])[0]
   Dataset = dataset.train_test_split(test_size=0.2)
   ```
 
