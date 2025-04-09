@@ -50,19 +50,6 @@ pip install torch transformers datasets peft evaluate tqdm
 
 ## Usage
 
-### Data Loading & Preprocessing
-
-- **Loading the Dataset:**  
-  Load your pre-saved mental health dialogue dataset from disk:
-  ```python
-  from datasets import load_dataset
-  dataset = load_dataset('samhog/psychology-10k', split = ['train'])[0]
-  Dataset = dataset.train_test_split(test_size=0.2)
-  ```
-
-- **Data Exploration:**  
-  Use helper functions (like `print_conv`) to inspect sample conversations.
-
 ### Model Initialization & Tokenization
 
 - **Loading the Base Model and Tokenizer:**
@@ -80,24 +67,16 @@ pip install torch transformers datasets peft evaluate tqdm
 - **Tokenization:**  
   Prepare inputs by concatenating the `instruction`, user query, and a task prompt (e.g., `"Answer :"`).
 
-### Fine-Tuning with LoRA
-
-- **LoRA Configuration:**
+- **Loading the PEFT Adapter:**
   ```python
-  from peft import LoraConfig, TaskType, get_peft_model
-  config = LoraConfig(
-      task_type=TaskType.SEQ_2_SEQ_LM,
-      r=32,
-      target_modules="all-linear",
-      lora_alpha=32,
-      lora_dropout=0.05
-  )
-  Model = get_peft_model(model, config)
-  Model.print_trainable_parameters()
+  from peft import PeftModel
+  Model = PeftModel.from_pretrained(
+                              model, 
+                              './peft_for_param_mitr', 
+                              is_trainable=False
+                              )
   ```
 
-- **Training:**  
-  Use Hugging Face’s `Trainer` along with custom tokenization to fine-tune the model on your dataset.
 
 ### Inference & Evaluation
 
@@ -105,6 +84,12 @@ pip install torch transformers datasets peft evaluate tqdm
   Generate responses by passing formatted user inputs:
   ```python
   def inference(input_data, model_=Model):
+    """
+    print the sentences in input_data and output of the model in conversational form.
+
+    input_data : list of the input sentences.
+    model: model you want to use for inference
+    """
       intruct = dataset['instruction'][0]
       task = "Answer :"
       inp = [intruct + "\n" + sent + "\n" + task for sent in input_data]
@@ -124,24 +109,8 @@ pip install torch transformers datasets peft evaluate tqdm
   rouge_score_new = rouge.compute(predictions=predicted_new, references=human_base_line)
   ```
 
-### Saving and Loading the Adapter
-
-- **Saving the Adapter:**
-  ```python
-  trainer.model.save_pretrained('./peft_for_param_mitr')
-  ```
-
-- **Loading for CPU Inference:**
-  ```python
-  from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-  from peft import PeftModel
-  tokenizer = AutoTokenizer.from_pretrained('/kaggle/working/Model', device_map="auto")
-  model = AutoModelForSeq2SeqLM.from_pretrained('/kaggle/working/Model', device_map="auto", torch_dtype=torch.bfloat16)
-  Model = PeftModel.from_pretrained(model, './peft_for_param_mitr', is_trainable=False)
-  ```
-
 ---
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the Apache License.
