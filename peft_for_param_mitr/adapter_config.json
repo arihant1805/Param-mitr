@@ -1,9 +1,8 @@
 {
   "alpha_pattern": {},
   "auto_mapping": null,
-  "base_model_name_or_path": "/kaggle/working/Model",
+  "base_model_name_or_path": "google/flan-t5-small",
   "bias": "none",
-  "corda_config": null,
   "eva_config": null,
   "exclude_modules": null,
   "fan_in_fan_out": false,
@@ -24,16 +23,15 @@
   "rank_pattern": {},
   "revision": null,
   "target_modules": [
-    "q",
     "o",
-    "wi_1",
+    "q",
+    "v",
     "k",
     "wi_0",
-    "v",
-    "wo"
+    "wo",
+    "wi_1"
   ],
   "task_type": "SEQ_2_SEQ_LM",
-  "trainable_token_indices": null,
   "use_dora": false,
   "use_rslora": false
 }

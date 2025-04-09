@@ -1,5 +1,5 @@
 ---
-base_model: /kaggle/working/Model
+base_model: google/flan-t5-small
 library_name: peft
 ---
 
@@ -199,4 +199,5 @@ Carbon emissions can be estimated using the [Machine Learning Impact calculator]
 [More Information Needed]
 ### Framework versions
 
+- PEFT 0.14.0
 - PEFT 0.15.1
