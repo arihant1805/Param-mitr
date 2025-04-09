@@ -67,7 +67,7 @@ pip install torch transformers datasets peft evaluate tqdm
 - **Loading the PEFT Adapter:**
   ```python
   from peft import PeftModel
-  Model = PeftModel.from_pretrained(
+  peft_model = PeftModel.from_pretrained(
                               model, 
                               './peft_for_param_mitr', 
                               is_trainable=False
@@ -80,16 +80,18 @@ pip install torch transformers datasets peft evaluate tqdm
 - **Inference Function:**  
   Generate responses by passing formatted user inputs:
   ```python
-  def inference(input_data, model_=Model):
+  def inference(input_data, model_):
     """
     print the sentences in input_data and output of the model in conversational form.
 
     input_data : list of the input sentences.
     model: model you want to use for inference
     """
+      # Ensure the dataset variable is defined or imported
+      dataset = {"instruction": ["Provide a supportive response to the following:"]}
       intruct = dataset['instruction'][0]
       task = "Answer :"
-      inp = [intruct + "\n" + sent + "\n" + task for sent in input_data]
+          **tokenizer(inp, return_token_type_ids=False, return_tensors='pt', padding=True, truncation=True).to('cuda' if torch.cuda.is_available() else 'cpu')
       output = model_.generate(
           **tokenizer(inp, return_token_type_ids=False, return_tensors='pt', padding=True, truncation=True).to('cuda')
       )
