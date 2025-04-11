@@ -1,5 +1,6 @@
 # Param-mitr
 
+
 Param-mitr is a Seq2Seq conversational AI model designed to provide mental health support and help you overcome personal challenges. The model is fine-tuned using LoRA (Low-Rank Adaptation) on a mental health dialogue dataset, enabling it to generate empathetic and contextually aware responses.
 
 ---
@@ -81,24 +82,41 @@ pip install torch transformers datasets peft evaluate tqdm
   Generate responses by passing formatted user inputs:
   ```python
   def inference(input_data, model_):
-    """
-    print the sentences in input_data and output of the model in conversational form.
+ 	"""
+    	print the sentences in input_data and output of the model in conversational form.
 
-    input_data : list of the input sentences.
-    model: model you want to use for inference
-    """
-      # Ensure the dataset variable is defined or imported
-      dataset = {"instruction": ["Provide a supportive response to the following:"]}
-      intruct = dataset['instruction'][0]
-      task = "Answer :"
-          **tokenizer(inp, return_token_type_ids=False, return_tensors='pt', padding=True, truncation=True).to('cuda' if torch.cuda.is_available() else 'cpu')
-      output = model_.generate(
-          **tokenizer(inp, return_token_type_ids=False, return_tensors='pt', padding=True, truncation=True).to('cuda')
-      )
-      decoded = [tokenizer.decode(out, skip_special_tokens=True) for out in output]
-      for i, j in zip(input_data, decoded):
-          print(f"Me: {i}\nParam-mitr: {j}\n")
+    	input_data : list of the input sentences.
+    	model: model you want to use for inference
+    	"""
+      	# Ensure the dataset variable is defined or imported
+      	dataset = {"instruction": ["Provide a supportive response to the following:"]}
+  	intruct = dataset['instruction'][0]
+
+      	task = "Answer :"
+          	**tokenizer(
+			inp, 
+			return_token_type_ids=False, 
+			return_tensors='pt', 
+			padding=True, 
+			truncation=True
+		).to('cuda' if torch.cuda.is_available() else 'cpu')
+
+      	output = model_.generate(
+          	**tokenizer(
+			inp, 
+			return_token_type_ids=False, 
+			return_tensors='pt', 
+			padding=True, truncation=True).to('cuda')
+      		)
+
+	decoded = [tokenizer.decode(out, skip_special_tokens=True) for out in output]
+      
+	for i, j in zip(input_data, decoded):
+        	print(f"Me: {i}\nParam-mitr: {j}\n")
   ```
+
+
+
 
 - **Evaluation:**  
   Compare generated responses against a human baseline using metrics like ROUGE:
