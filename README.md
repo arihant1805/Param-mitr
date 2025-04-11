@@ -88,17 +88,8 @@ input_data : list of the input sentences.
 model: model you want to use for inference
 """
       	# Ensure the dataset variable is defined or imported
-      	dataset = {"instruction": ["Provide a supportive response to the following:"]}
-  	intruct = dataset['instruction'][0]
-
-      	task = "Answer :"
-          	**tokenizer(
-			inp, 
-			return_token_type_ids=False, 
-			return_tensors='pt', 
-			padding=True, 
-			truncation=True
-		).to('cuda' if torch.cuda.is_available() else 'cpu')
+      	instruct = "Provide a supportive response to the following:\n"
+      	inp = [instruct + question + "\nAnswer:" for question in input_data]
 
       	output = model_.generate(
           	**tokenizer(
