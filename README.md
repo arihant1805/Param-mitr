@@ -122,7 +122,10 @@ model: model you want to use for inference
   ```python
   import evaluate
   rouge = evaluate.load('rouge')
-  rouge_score_new = rouge.compute(predictions=predicted_new, references=human_base_line)
+  rouge_score_new = rouge.compute(
+			predictions=predicted_new, 
+			references=human_base_line
+			)
   ```
 
 ---
