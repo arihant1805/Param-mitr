@@ -80,7 +80,7 @@ pip install torch transformers datasets peft evaluate tqdm
 
 - **Inference Function:**  
   Generate responses by passing formatted user inputs:
-  ```python
+```python
 def inference(input_data, model_):
 """
 print the sentences in input_data and output of the model in conversational form.
